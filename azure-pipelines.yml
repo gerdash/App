@@ -3,23 +3,29 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+variables:
+ - group test_build
+
 trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  vmImage: 'windows-2019'
 
 steps:
+- script: echo $(BUILDVERSION)
 - task: NuGetToolInstaller@1
-
+  inputs:
+    checkLatest: true
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'custom'
+    arguments: 'sources remove -Name VCCAPI'
+
+- task: NuGetAuthenticate@0
+  inputs:
+    forceReinstallCredentialProvider: true
 
 - task: VSBuild@1
   inputs:
