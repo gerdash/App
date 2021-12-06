@@ -35,9 +35,10 @@ https://cakebuild.net
 
 #>
 
+# There are two additional switches in the original but I don't think it matters
 [CmdletBinding()]
 Param(
-    [string]$Script,
+    [string]$Script = "build.cake",
     [string]$Target,
     [string]$Configuration,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
@@ -50,27 +51,28 @@ Param(
     [string[]]$ScriptArgs
 )
 
-# This is an automatic variable in PowerShell Core, but not in Windows PowerShell 5.x
-if (-not (Test-Path variable:global:IsCoreCLR)) {
-    $IsCoreCLR = $false
-}
+# This part isn't in the script but maybe it should be? Think it's a pretty useful try-catch block since I've had this error while trying out cake things
+# # This is an automatic variable in PowerShell Core, but not in Windows PowerShell 5.x
+# if (-not (Test-Path variable:global:IsCoreCLR)) {
+#     $IsCoreCLR = $false
+# }
 
-# Attempt to set highest encryption available for SecurityProtocol.
-# PowerShell will not set this by default (until maybe .NET 4.6.x). This
-# will typically produce a message for PowerShell v2 (just an info
-# message though)
-try {
-    # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
-    # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won't
-    # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
-    # installed (.NET 4.5 is an in-place upgrade).
-    # PowerShell Core already has support for TLS 1.2 so we can skip this if running in that.
-    if (-not $IsCoreCLR) {
-        [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
-    }
-  } catch {
-    Write-Output 'Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to upgrade to .NET Framework 4.5+ and PowerShell v3'
-  }
+# # Attempt to set highest encryption available for SecurityProtocol.
+# # PowerShell will not set this by default (until maybe .NET 4.6.x). This
+# # will typically produce a message for PowerShell v2 (just an info
+# # message though)
+# try {
+#     # Set TLS 1.2 (3072), then TLS 1.1 (768), then TLS 1.0 (192), finally SSL 3.0 (48)
+#     # Use integers because the enumeration values for TLS 1.2 and TLS 1.1 won't
+#     # exist in .NET 4.0, even though they are addressable if .NET 4.5+ is
+#     # installed (.NET 4.5 is an in-place upgrade).
+#     # PowerShell Core already has support for TLS 1.2 so we can skip this if running in that.
+#     if (-not $IsCoreCLR) {
+#         [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48
+#     }
+#   } catch {
+#     Write-Output 'Unable to set PowerShell to use TLS 1.2 and TLS 1.1 due to old .NET Framework installed. If you see underlying connection closed or trust errors, you may need to upgrade to .NET Framework 4.5+ and PowerShell v3'
+#   }
 
 [Reflection.Assembly]::LoadWithPartialName("System.Security") | Out-Null
 function MD5HashFile([string] $filePath)
@@ -95,10 +97,10 @@ function MD5HashFile([string] $filePath)
             $file.Dispose()
         }
         
-        if ($md5 -ne $null)
-        {
-            $md5.Dispose()
-        }
+        # if ($md5 -ne $null)
+        # {
+        #     $md5.Dispose()
+        # }
     }
 }
 
@@ -175,18 +177,18 @@ if (!(Test-Path $NUGET_EXE)) {
 }
 
 # These are automatic variables in PowerShell Core, but not in Windows PowerShell 5.x
-if (-not (Test-Path variable:global:ismacos)) {
-    $IsLinux = $false
-    $IsMacOS = $false
-}
+# if (-not (Test-Path variable:global:ismacos)) {
+#     $IsLinux = $false
+#     $IsMacOS = $false
+# }
 
 # Save nuget.exe path to environment to be available to child processed
 $env:NUGET_EXE = $NUGET_EXE
-$env:NUGET_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
-    "mono `"$NUGET_EXE`""
-} else {
-    "`"$NUGET_EXE`""
-}
+# $env:NUGET_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
+#     "mono `"$NUGET_EXE`""
+# } else {
+#     "`"$NUGET_EXE`""
+# }
 
 # Restore tools from NuGet?
 if(-Not $SkipToolPackageRestore.IsPresent) {
@@ -257,31 +259,35 @@ if (!(Test-Path $CAKE_EXE)) {
     Throw "Could not find Cake.exe at $CAKE_EXE"
 }
 
-$CAKE_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
-    "mono `"$CAKE_EXE`""
-} else {
-    "`"$CAKE_EXE`""
-}
+# $CAKE_EXE_INVOCATION = if ($IsLinux -or $IsMacOS) {
+#     "mono `"$CAKE_EXE`""
+# } else {
+#     "`"$CAKE_EXE`""
+# }
 
  # Build an array (not a string) of Cake arguments to be joined later
-$cakeArguments = @()
-if ($Script) { $cakeArguments += "`"$Script`"" }
-if ($Target) { $cakeArguments += "--target=`"$Target`"" }
+$cakeArguments = @("$Script");
+if ($Target) { $cakeArguments += "-target=$Target" }
 if ($Configuration) { $cakeArguments += "--configuration=$Configuration" }
 if ($Verbosity) { $cakeArguments += "--verbosity=$Verbosity" }
 if ($ShowDescription) { $cakeArguments += "--showdescription" }
 if ($DryRun) { $cakeArguments += "--dryrun" }
 $cakeArguments += $ScriptArgs
 
+# # Start Cake
+# Write-Host "Running build script..."
+# Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ")"
+# $cakeExitCode = $LASTEXITCODE
+
+# # Clean up environment variables that were created earlier in this bootstrapper
+# # $env:CAKE_PATHS_TOOLS = $null
+# # $env:CAKE_PATHS_ADDINS = $null
+# # $env:CAKE_PATHS_MODULES = $null
+
+# # Return exit code
+# exit $cakeExitCode
+
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& $CAKE_EXE_INVOCATION $($cakeArguments -join " ")"
-$cakeExitCode = $LASTEXITCODE
-
-# Clean up environment variables that were created earlier in this bootstrapper
-$env:CAKE_PATHS_TOOLS = $null
-$env:CAKE_PATHS_ADDINS = $null
-$env:CAKE_PATHS_MODULES = $null
-
-# Return exit code
-exit $cakeExitCode
+&$CAKE_EXE $cakeArguments
+exit $LASTEXITCODE
