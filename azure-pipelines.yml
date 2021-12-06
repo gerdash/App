@@ -37,7 +37,7 @@ steps:
   inputs:
     script: build.cake
     target: 'Default'
-    arguments: ''
+    arguments: '-BUILDVERSION=$(BUILDVERSION) -BUILDVCSNUMBER=$(BUILDVCSNUMBER)'
     useBuildAgentNugetExe: true
     Bootstrap: true
     Version: '0.38.5'
