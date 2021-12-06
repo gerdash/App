@@ -224,14 +224,14 @@ Task ("Build")
 //     CopyDirectory (rgBuildPath, rgArtifactsPath);
 //   });
 
-Task("Pacakge-Zip")
-    IsDependentOn("CreatePackage")
-    .Does(( => 
-    Zip(
-        PublishDir,
-        Combine(packageOutputPath, "ending")
-    );
-    ))
+// Task("Pacakge-Zip")
+//     IsDependentOn("CreatePackage")
+//     .Does(( => 
+//     Zip(
+//         PublishDir,
+//         Combine(packageOutputPath, "ending")
+//     );
+//     ))
 
 //   Task ("OctoPack")
 //   .IsDependentOn ("CreatePackage")
@@ -265,6 +265,6 @@ Task("Pacakge-Zip")
 //     });
 //   });
 
-Task ("Default").IsDependentOn ("OctoPack");
+Task ("Default");
 
 RunTarget (target);

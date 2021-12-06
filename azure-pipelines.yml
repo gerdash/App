@@ -18,6 +18,7 @@ steps:
 - task: NuGetToolInstaller@1
   inputs:
     checkLatest: true
+    
 #specific package for our project, should I fake it?
 # - task: NuGetCommand@2
 #   inputs:
