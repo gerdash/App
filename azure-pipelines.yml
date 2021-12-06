@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 variables:
- - group test_build
+ - group: test_build
 
 trigger:
 - main
@@ -27,14 +27,27 @@ steps:
   inputs:
     forceReinstallCredentialProvider: true
 
-- task: VSBuild@1
+- task: NodeTool@0
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    versionSpec: '1.x'
+    checkLatest: true
 
-- task: VSTest@2
+- task: Cake@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    script: build.cake
+    target: 'Default'
+    arguments: ''
+    useBuildAgentNugetExe: true
+    Bootstrap: true
+    Version: '0.38.5'
+
+- task NuGetCommand@2
+  inputs:
+    command: 'custom'
+    arguments: 'sources remove -Name VCCAPI'
+
+- task: Publish PipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/artifacts/Packages'
+    artifact: 'TestApp'
+    publishLocation: 'pipeline'
