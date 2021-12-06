@@ -18,10 +18,11 @@ steps:
 - task: NuGetToolInstaller@1
   inputs:
     checkLatest: true
-- task: NuGetCommand@2
-  inputs:
-    command: 'custom'
-    arguments: 'sources remove -Name VCCAPI'
+#specific package for our project, should I fake it?
+# - task: NuGetCommand@2
+#   inputs:
+#     command: 'custom'
+#     arguments: 'sources remove -Name VCCAPI'
 
 - task: NuGetAuthenticate@0
   inputs:
