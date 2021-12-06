@@ -10,6 +10,7 @@
 #addin nuget:?package=Cake.Sonar
 using Cake.Common.Build;
 
+var target = Argument ("target", "Default");
 //Setup variables
 var assemblyVersion = Argument<string> ("assemblyVersion", "0.0.0.1");
 var releaseVersion = Argument<string> ("releaseVersion", "0.0.0.1");
@@ -27,7 +28,7 @@ var BUILDVCSNUMBER = Argument<string> ("BUILDVCSNUMBER", "");
 var packageOutput = "./artifacts/Packages";
 var appSolution = "./SandboxApp.sln";
 
-var cloudServiceArtifactsPath = "./artifacts/App/";
+var appArtifactsPath = "./artifacts/App/";
 var rgArtifactsPath = $"./artifacts/ResourceGroup/";
 var azureFunctionArtifactsPath = $"./artifacts/AzureFunctions/";
 var externalApiArtifactsPath = $"./artifacts/ExternalApi/";
@@ -146,7 +147,7 @@ Task ("AssemblyVersion")
 //     });
 //   });
 
-Task ("Build")
+Task ("Build");
 
 // Task ("RunTests")
 //   .IsDependentOn ("Build")
