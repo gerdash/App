@@ -42,10 +42,10 @@ steps:
     Bootstrap: true
     Version: '0.38.5'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'custom'
-    arguments: 'sources remove -Name VCCAPI'
+# - task: NuGetCommand@2
+#   inputs:
+#     command: 'custom'
+#     arguments: 'sources remove -Name VCCAPI'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.SourcesDirectory)/artifacts/Packages'
