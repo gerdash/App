@@ -169,7 +169,21 @@ Task ("AssemblyVersion")
 //     });
 //   });
 
-Task ("Build");
+Task ("Build")
+  .IsDependentOn ("AssemblyVersion")
+  .IsDependentOn ("BuildWebpack")
+  .IsDependentOn ("Nuget")
+  .IsDependentOn ("Clean")
+//  .IsDependentOn ("Sonar-Init")
+  .Does (() => {
+    MSBuild (appSolution,
+      settings => {
+        settings.SetConfiguration (configuration)
+        .SetVerbosity (Verbosity.Minimal)
+        .WithProperty ("targetProfile", "CI");
+      }
+    );
+  });
 
 // Task ("RunTests")
 //   .IsDependentOn ("Build")
@@ -288,6 +302,6 @@ Task ("Build");
 //     });
 //   });
 
-Task ("Default");
+Task ("Default").IsDependentOn("Build");
 
 RunTarget (target);
