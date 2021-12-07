@@ -238,7 +238,7 @@ Task ("CreatePackage")
     );
     
     Zip(
-            projectArtifactsPath,
+            "PublishDir", "." + projectArtifactsPath,
             packageOutput
         );
     // MSBuild (azureFunctionProject,
@@ -264,15 +264,6 @@ Task ("CreatePackage")
     // EnsureDirectoryExists (rgBuildPath);
     // CopyDirectory (rgBuildPath, rgArtifactsPath);
   });
-
-// Task("Build-Zip")
-//     .IsDependentOn("CreatePackage")
-//     .Does(() =>
-//     { 
-//         Zip(
-//             projectArtifactsPath
-//         );
-//     });
 
 //   Task ("OctoPack")
 //   .IsDependentOn ("CreatePackage")
