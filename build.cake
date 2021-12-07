@@ -238,7 +238,7 @@ Task ("CreatePackage")
     );
     
     Zip(
-            "PublishDir", "." + projectArtifactsPath,
+            project,
             packageOutput
         );
     // MSBuild (azureFunctionProject,
