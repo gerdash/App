@@ -62,7 +62,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
 var project = "./SandboxApp/SandboxApp.csproj";
-var package = File("app.zip" + releaseVersion).Path;
+var package = File("app.zip").Path;
 
 
 Setup(context => {
