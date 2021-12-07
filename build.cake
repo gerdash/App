@@ -306,6 +306,6 @@ Task ("CreatePackage")
 //     });
 //   });
 
-Task ("Default").IsDependentOn("Build");
+Task ("Default").IsDependentOn("CreatePackage");
 
 RunTarget (target);
