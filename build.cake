@@ -61,7 +61,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiProject = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/Volvo.DigitalCommerce.DealerPricing.ExternalApi.csproj";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
-var project = "./SandboxApp/SanboxApp.csproj";
+var project = "./SandboxApp/SandboxApp.csproj";
 
 Setup(context => {
     assemblyVersion = BUILDVERSION;
