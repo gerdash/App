@@ -39,7 +39,7 @@ var BUILDVCSNUMBER = Argument<string> ("BUILDVCSNUMBER", "");
 
 //PATHS
 
-// var cloudServiceArtifactsPath = "./artifacts/App/";
+var projectArtifactsPath = "./artifacts/App/";
 // var rgArtifactsPath = $"./artifacts/ResourceGroup/";
 // var azureFunctionArtifactsPath = $"./artifacts/AzureFunctions/";
 // var externalApiArtifactsPath = $"./artifacts/ExternalApi/";
@@ -61,7 +61,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiProject = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/Volvo.DigitalCommerce.DealerPricing.ExternalApi.csproj";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
-var uiPath = "./SandboxApp";
+var project = "./SandboxApp/SanboxApp.csproj";
 
 Setup(context => {
     assemblyVersion = BUILDVERSION;
@@ -223,52 +223,51 @@ Task ("Build")
 //     });
 //   });
 
-// Task ("CreatePackage")
-//   //.IsDependentOn ("Sonar-Analyse")
-//   .IsDependentOn ("Build")
-//   .Does (() => {
-//     MSBuild (cloudServiceProject,
-//       settings => {
-//         settings.SetConfiguration (configuration)
-//         .SetVerbosity (Verbosity.Minimal)
-//         .WithProperty ("targetProfile", "CI")
-//         .WithProperty ("PublishDir", "." + cloudServiceArtifactsPath)
-//         .WithTarget ("publish");
-//       }
-//     );
+Task ("CreatePackage")
+  //.IsDependentOn ("Sonar-Analyse")
+  .IsDependentOn ("Build")
+  .Does (() => {
+    MSBuild (project,
+      settings => {
+        settings.SetConfiguration (configuration)
+        .SetVerbosity (Verbosity.Minimal)
+        .WithProperty ("targetProfile", "CI")
+        .WithProperty ("PublishDir", "." + projectArtifactsPath)
+        .WithTarget ("publish");
+      }
+    );
 
-//     MSBuild (azureFunctionProject,
-//       settings => {
-//         settings.SetConfiguration (configuration)
-//         .SetVerbosity (Verbosity.Minimal)
-//         .WithProperty ("PublishDir", "." + azureFunctionArtifactsPath)
-//         .WithTarget ("publish");
-//       }
-//     );
+    // MSBuild (azureFunctionProject,
+    //   settings => {
+    //     settings.SetConfiguration (configuration)
+    //     .SetVerbosity (Verbosity.Minimal)
+    //     .WithProperty ("PublishDir", "." + azureFunctionArtifactsPath)
+    //     .WithTarget ("publish");
+    //   }
+    // );
 
-//     MSBuild (externalApiProject,
-//       settings => {
-//         settings.SetConfiguration (configuration)
-//           .SetVerbosity (Verbosity.Minimal)
-//           .WithProperty ("OutDir", "." + externalApiArtifactsPath)
-//           .WithProperty ("DeployOnBuild", "true")
-//           .WithProperty ("DeployTarget", "Package")
-//           .WithProperty ("SkipInvalidConfigurations", "true");
-//       }
-//     );
+    // MSBuild (externalApiProject,
+    //   settings => {
+    //     settings.SetConfiguration (configuration)
+    //       .SetVerbosity (Verbosity.Minimal)
+    //       .WithProperty ("OutDir", "." + externalApiArtifactsPath)
+    //       .WithProperty ("DeployOnBuild", "true")
+    //       .WithProperty ("DeployTarget", "Package")
+    //       .WithProperty ("SkipInvalidConfigurations", "true");
+    //   }
+    // );
 
-//     EnsureDirectoryExists (rgBuildPath);
-//     CopyDirectory (rgBuildPath, rgArtifactsPath);
-//   });
+    // EnsureDirectoryExists (rgBuildPath);
+    // CopyDirectory (rgBuildPath, rgArtifactsPath);
+  });
 
-// Task("Pacakge-Zip")
-//     IsDependentOn("CreatePackage")
-//     .Does(( => 
-//     Zip(
-//         PublishDir,
-//         Combine(packageOutputPath, "ending")
-//     );
-//     ))
+Task("Build-Zip")
+    IsDependentOn("CreatePackage")
+    .Does(( => 
+    Zip(
+        PublishDir
+    );
+    ))
 
 //   Task ("OctoPack")
 //   .IsDependentOn ("CreatePackage")
