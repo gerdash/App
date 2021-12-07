@@ -88,29 +88,29 @@ Task("Nuget")
     });
 
 //Commented out tasks deal with UI/FrontEnd
-Task ("NpmInstall")
-    .IsDependentOn ("Clean")
-    .Does (() => {
-        var settings = new NpmInstallSettings();
+// Task ("NpmInstall")
+//     .IsDependentOn ("Clean")
+//     .Does (() => {
+//         var settings = new NpmInstallSettings();
 
-        settings.LogLevel = NpmLogLevel.Silent;
-        settings.WorkingDirectory = uiPath;
+//         settings.LogLevel = NpmLogLevel.Silent;
+//         settings.WorkingDirectory = uiPath;
 
-        NpmInstall (settings);
-    });
+//         NpmInstall (settings);
+//     });
 
-Task ("RunLint")
-  .IsDependentOn ("NpmInstall")
-  .IsDependentOn ("Clean")
-  .Does (() => {
-    var settings = new NpmRunScriptSettings();
+// Task ("RunLint")
+//   .IsDependentOn ("NpmInstall")
+//   .IsDependentOn ("Clean")
+//   .Does (() => {
+//     var settings = new NpmRunScriptSettings();
 
-    settings.LogLevel = NpmLogLevel.Silent;
-    settings.WorkingDirectory = uiPath;
-    settings.ScriptName = "lint";
+//     settings.LogLevel = NpmLogLevel.Silent;
+//     settings.WorkingDirectory = uiPath;
+//     settings.ScriptName = "lint";
     
-    NpmRunScript(settings);
-  });
+//     NpmRunScript(settings);
+//   });
 
 // Task ("RunFrontendTests")
 //   .IsDependentOn ("RunLint")
@@ -128,18 +128,18 @@ Task ("RunLint")
 
 Task ("BuildWebpack")
 //  .IsDependentOn("RunFrontendTests")
-  .IsDependentOn ("NpmInstall")
-  .IsDependentOn ("Clean")
-  .Does (() => {
-    var settings = new NpmRunScriptSettings();
+//   .IsDependentOn ("NpmInstall")
+//   .IsDependentOn ("Clean")
+//   .Does (() => {
+//     var settings = new NpmRunScriptSettings();
 
-    settings.LogLevel = NpmLogLevel.Silent;
-    settings.WorkingDirectory = uiPath;
-    settings.ScriptName = "build";
-    settings.WithArguments("../../Sandbox.sln");
+//     settings.LogLevel = NpmLogLevel.Silent;
+//     settings.WorkingDirectory = uiPath;
+//     settings.ScriptName = "build";
+//     settings.WithArguments("../../Sandbox.sln");
     
-    NpmRunScript(settings);
-  });
+//     NpmRunScript(settings);
+//   });
 
 Task ("AssemblyVersion")
   .IsDependentOn ("Clean")
@@ -171,7 +171,7 @@ Task ("AssemblyVersion")
 
 Task ("Build")
   .IsDependentOn ("AssemblyVersion")
-  .IsDependentOn ("BuildWebpack")
+//  .IsDependentOn ("BuildWebpack")
   .IsDependentOn ("Nuget")
   .IsDependentOn ("Clean")
 //  .IsDependentOn ("Sonar-Init")
