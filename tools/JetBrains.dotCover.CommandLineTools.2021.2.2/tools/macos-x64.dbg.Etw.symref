@@ -1,0 +1,6 @@
+﻿macos-x64.dbg/libJetBrains.Dpa.Collector.dylib                                                                          libjetbrains.dpa.collector.dylib/mach-uuid-a89af470782a342fa1fdd39481bca619/libjetbrains.dpa.collector.dylib
+macos-x64.dbg/libmono-profiler-jb.dylib                                                                                 libmono-profiler-jb.dylib/mach-uuid-b35c8c10152734a4b73f4613b7c66d7e/libmono-profiler-jb.dylib
+macos-x64.dbg/libevent_pipe_timeline_profiler.dylib                                                                     libevent_pipe_timeline_profiler.dylib/mach-uuid-0d87d515fafc320d8dd01b812b26a4cd/libevent_pipe_timeline_profiler.dylib
+macos-x64.dbg/libJetBrains.Dpa.Collector.dylib.dSYM/Contents/Resources/DWARF/libJetBrains.Dpa.Collector.dylib           _.dwarf/mach-uuid-sym-a89af470782a342fa1fdd39481bca619/_.dwarf
+macos-x64.dbg/libmono-profiler-jb.dylib.dSYM/Contents/Resources/DWARF/libmono-profiler-jb.dylib                         _.dwarf/mach-uuid-sym-b35c8c10152734a4b73f4613b7c66d7e/_.dwarf
+macos-x64.dbg/libevent_pipe_timeline_profiler.dylib.dSYM/Contents/Resources/DWARF/libevent_pipe_timeline_profiler.dylib _.dwarf/mach-uuid-sym-0d87d515fafc320d8dd01b812b26a4cd/_.dwarf

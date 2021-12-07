@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Cake.Yarn</id>
+    <version>0.4.8</version>
+    <title>Cake.Yarn</title>
+    <authors>Maxim Milovanov</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/MilovanovM/cake-yarn/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/MilovanovM/cake-yarn</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
+    <description>A set of aliases for Cake to help with running Yarn (node package manager from Facebook) commands</description>
+    <releaseNotes>update to cake 1.0.0</releaseNotes>
+    <tags>Cake Script Build Yarn</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>

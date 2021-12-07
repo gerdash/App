@@ -1,0 +1,899 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cake.Yarn</name>
+    </assembly>
+    <members>
+        <member name="T:Cake.Yarn.IYarnRunnerCommands">
+            <summary>
+            Yarn Runner command interface
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.Install(System.Action{Cake.Yarn.YarnInstallSettings})">
+            <summary>
+            execute 'yarn install' with options
+            </summary>
+            <param name="configure">options when running 'yarn install'</param>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.Add(System.Action{Cake.Yarn.YarnAddSettings})">
+            <summary>
+            execute 'yarn add' with options
+            </summary>
+            <param name="configure">options when running 'yarn add'</param>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.RunScript(System.String,System.Action{Cake.Yarn.YarnRunSettings})">
+            <summary>
+            execute 'yarn run' with arguments
+            </summary>
+            <param name="scriptName">name of the </param>
+            <param name="configure">options when running 'yarn run'</param>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.Pack(System.Action{Cake.Yarn.YarnPackSettings})">
+            <summary>
+            execute 'yarn pack' with options
+            </summary>
+            <param name="packSettings">options when running 'yarn pack'</param>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.Version(System.Action{Cake.Yarn.YarnVersionSettings})">
+            <summary>
+            execute 'yarn version' with options
+            </summary>
+            <param name="versionSettings">options when running 'yarn version'</param>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerCommands.Audit(System.Action{Cake.Yarn.YarnAuditSettings})">
+            <summary>
+            execute 'yarn audit' with options
+            </summary>
+            <param name="auditSettings">options when running 'yarn audit'</param>
+            <returns></returns>
+        </member>
+        <member name="T:Cake.Yarn.YarnAddSettings">
+            <summary>
+            Yarn add options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnAddSettings.#ctor">
+            <summary>
+            Yarn "add" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnAddSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnAddSettings.Package(System.Uri)">
+            <summary>
+            Install a package from the given url
+            </summary>
+            <param name="url">Url to directory containing package.json (see yarn docs)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnAddSettings.Package(System.String,System.String,System.String)">
+            <summary>
+            install a package by name, with optional version/tag and scope
+            </summary>
+            <param name="package"></param>
+            <param name="versionOrTag"></param>
+            <param name="scope"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnAddSettings.Globally(System.Boolean)">
+            <summary>
+            Applies the --global parameter
+            </summary>
+            <param name="enabled"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cake.Yarn.YarnAddSettings.Packages">
+            <summary>
+            List of packages to install
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnAddSettings.Global">
+            <summary>
+            'global' option
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.YarnAuditSettings">
+            <summary>
+            Yarn audit options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnAuditSettings.#ctor">
+            <summary>
+            Yarn "audit" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnAuditSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnAuditSettings.SetJson">
+            <summary>
+            Applies the --json parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnAuditSettings.SetVerbose">
+            <summary>
+            Applies the --verbose parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cake.Yarn.YarnAuditSettings.Json">
+            <summary>
+            --json
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnAuditSettings.Verbose">
+            <summary>
+            --verbose
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.YarnCacheSettings">
+            <summary>
+            Yarn cache options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnCacheSettings.#ctor">
+            <summary>
+            Yarn "cache" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnCacheSettings.#ctor(System.String)">
+            <summary>
+            yarn 'cache' settings for the named script
+            </summary>
+            <param name="command">command name to execute</param>
+        </member>
+        <member name="P:Cake.Yarn.YarnCacheSettings.SubCommand">
+            <summary>
+            Name of the command to execute
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnCacheSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:Cake.Yarn.YarnInstallSettings">
+            <summary>
+            Yarn install options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.#ctor">
+            <summary>
+            Yarn "install" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.ForProduction(System.Boolean)">
+            <summary>
+            Applies the --production parameter (can not be set when installing individual packages
+            </summary>
+            <param name="enabled">The value of the explicitely set production parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.IgnorePlatformWarnings(System.Boolean)">
+            <summary>
+            Applies the --ignore-platform parameter
+            </summary>
+            <param name="enabled"><c>true</c> to apply the parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.IgnoreOptionalWarnings(System.Boolean)">
+            <summary>
+            Applies the --ignore-optional parameter
+            </summary>
+            <param name="enabled"><c>true</c> to apply the parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.IgnoreEnginesWarnings(System.Boolean)">
+            <summary>
+            Applies the --ignore-engines parameter
+            </summary>
+            <param name="enabled"><c>true</c> to apply the parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.WithFrozenLockfile(System.Boolean)">
+            <summary>
+            Applies the --frozen-lockfile parameter
+            </summary>
+            <param name="enabled"><c>true</c> to apply the parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.Offline(System.Boolean)">
+            <summary>
+            Applies the --offline parameter
+            </summary>
+            <param name="enabled"><c>true</c> to apply the parameter</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnInstallSettings.WithArgument(System.String)">
+            <summary>
+            Apply any individual argument.
+            </summary>
+            <param name="arg">The individual argument to use.</param>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.Production">
+            <summary>
+            --production
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.IgnorePlatform">
+            <summary>
+            --ignore-platform
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.IgnoreOptional">
+            <summary>
+            --ignore-optional
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.IgnoreEngines">
+            <summary>
+            --ignore-engines
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.FrozenLockfile">
+            <summary>
+            --frozen-lockfile
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.OfflineInstall">
+            <summary>
+            --offline
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnInstallSettings.Arguments">
+            <summary>
+            Arguments to pass to the target script
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.YarnPackSettings">
+            <summary>
+            Yarn pack options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnPackSettings.#ctor">
+            <summary>
+            Yarn "pack" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnPackSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnPackSettings.Named(System.String)">
+            <summary>
+            Applies the --filename parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cake.Yarn.YarnPackSettings.Filename">
+            <summary>
+            --filename
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.YarnPublishSettings">
+            <summary>
+            Yarn publish options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnPublishSettings.#ctor">
+            <summary>
+            Yarn "publish" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnPublishSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnPublishSettings.NewVersion(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Applies the --new-version parameter.
+            </summary>
+            <param name="major">Major version</param>
+            <param name="minor">Minor version</param>
+            <param name="patch">Patch version</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnPublishSettings.Tag(System.String)">
+            <summary>
+            Applies the --tag parameter
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cake.Yarn.YarnRemoveSettings">
+            <summary>
+            Yarn remove options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRemoveSettings.#ctor">
+            <summary>
+            Yarn "remove" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRemoveSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnRemoveSettings.Package(System.Uri)">
+            <summary>
+            Remove a package by the given url
+            </summary>
+            <param name="url">Url to directory containing package.json (see yarn docs)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRemoveSettings.Package(System.String,System.String,System.String)">
+            <summary>
+            remove a package by name, with optional version/tag and scope
+            </summary>
+            <param name="package"></param>
+            <param name="versionOrTag"></param>
+            <param name="scope"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRemoveSettings.Globally(System.Boolean)">
+            <summary>
+            Applies the --global parameter
+            </summary>
+            <param name="enabled"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cake.Yarn.YarnRemoveSettings.Packages">
+            <summary>
+            List of packages to install
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnRemoveSettings.Global">
+            <summary>
+            'global' option
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.IYarnRunnerConfiguration">
+            <summary>
+            Yarn Runner configuration
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.IYarnRunnerConfiguration.FromPath(Cake.Core.IO.DirectoryPath)">
+            <summary>
+            Sets the working directory for yarn commands
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cake.Yarn.YarnRunner">
+            <summary>
+            A wrapper around the Yarn package manager
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.#ctor(Cake.Core.IO.IFileSystem,Cake.Core.ICakeEnvironment,Cake.Core.IO.IProcessRunner,Cake.Core.Tooling.IToolLocator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cake.Yarn.YarnRunner" /> class.
+            </summary>
+            <param name="fileSystem">The file system</param>
+            <param name="environment">The environment</param>
+            <param name="processRunner">The process runner</param>
+            <param name="toolLocator">The tool locator</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.FromPath(Cake.Core.IO.DirectoryPath)">
+            <summary>
+            Sets the working directory for yarn commands
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Install(System.Action{Cake.Yarn.YarnInstallSettings})">
+            <summary>
+            execute 'yarn install' with options
+            </summary>
+            <param name="configure">options when running 'yarn install'</param>
+            <example>
+            <para>Run 'yarn install'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-FromPath")
+                .Does(() =>
+            {
+                Yarn.FromPath("./dir-with-packagejson").Install();
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn install'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Install")
+                .Does(() =>
+            {
+                Yarn.Install();
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Add(System.Action{Cake.Yarn.YarnAddSettings})">
+            <summary>
+            execute 'yarn add' with options
+            </summary>
+            <param name="configure">options when running 'yarn install'</param>
+            <example>
+            <para>Run 'yarn add gulp'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Add-Gulp")
+                .Does(() =>
+            {
+                Yarn.Add(settings => settings.Package("gulp"));
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn global add gulp'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Add-Gulp")
+                .Does(() =>
+            {
+                Yarn.Add(settings => settings.Package("gulp").Globally());
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Pack(System.Action{Cake.Yarn.YarnPackSettings})">
+            <summary>
+            execute 'yarn pack' with options
+            </summary>
+            <param name="packSettings">options when running 'yarn pack'</param>
+            <example>
+            <para>Run 'yarn pack'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Pack")
+                .Does(() =>
+            {
+                Yarn.Pack();
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn pack --filename filename'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Pack")
+                .Does(() =>
+            {
+                Yarn.Pack(settings => settings.Named("Filename"));
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Remove(System.Action{Cake.Yarn.YarnRemoveSettings})">
+            <summary>
+            execute 'yarn remove' with options
+            </summary>
+            <param name="configure">options when running 'yarn remove'</param>
+            <example>
+            <para>Run 'yarn remove gulp'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Remove-Gulp")
+                .Does(() =>
+            {
+                Yarn.Remove(settings => settings.Package("gulp"));
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn global remove gulp'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-remove-Gulp")
+                .Does(() =>
+            {
+                Yarn.Remove(settings => settings.Package("gulp").Globally());
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.RunScript(System.String,System.Action{Cake.Yarn.YarnRunSettings})">
+            <summary>
+            execute 'yarn run' with arguments
+            </summary>
+            <param name="scriptName">name of the script to run</param>
+            <param name="configure"></param>
+            <example>
+            <para>Run 'yarn run hello'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Run")
+                .Does(() =>
+            {
+                Yarn.RunScript("hello");
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Cache(System.String,System.Action{Cake.Yarn.YarnCacheSettings})">
+            <summary>
+            execute 'yarn cache' with arguments
+            </summary>
+            <param name="subCommand">subcommand of cache to run </param>
+            <param name="configure"></param>
+            <example>
+            <para>Run 'yarn cache clean'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Clean")
+                .Does(() =>
+            {
+                Yarn.Cache("clean");
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Version(System.Action{Cake.Yarn.YarnVersionSettings})">
+            <summary>
+            execute 'yarn version' with options
+            </summary>
+            <param name="versionSettings">options when running 'yarn version'</param>
+            <example>
+            <para>Run 'yarn version'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Version")
+                .Does(() =>
+            {
+                Yarn.Version();
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn version --new-version 0.1.0'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Set-Version")
+                .Does(() =>
+            {
+                Yarn.Version(settings => settings.SetVersion("0.1.0"));
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn version --no-git-tag-version'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Version")
+                .Does(() =>
+            {
+                Yarn.Version(settings => settings.DisableGitTagCreation());
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Audit(System.Action{Cake.Yarn.YarnAuditSettings})">
+            <summary>
+            execute 'yarn audit' with options
+            </summary>
+            <param name="auditSettings">options when running 'yarn audit'</param>
+            <example>
+            <para>Run 'yarn audit'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Audit")
+                .Does(() =>
+            {
+                Yarn.Audit();
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn audit --verbose'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Set-Verbose")
+                .Does(() =>
+            {
+                Yarn.Audit(settings => settings.SetVerbose());
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn audit --json'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Set-Json")
+                .Does(() =>
+            {
+                Yarn.Audit(settings => settings.SetJson());
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.Publish(System.Action{Cake.Yarn.YarnPublishSettings})">
+            <summary>
+            execute 'yarn publish' with options
+            </summary>
+            <param name="publishSettings">options when running 'yarn publish'</param>
+            <example>
+            <para>Run 'yarn publish'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Publish")
+                .Does(() =>
+            {
+                Yarn.Publish();
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn publish --new-version 1.2.3'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Publish-With-New-Version")
+                .Does(() =>
+            {
+                Yarn.Publish(settings => settings.NewVersion(1, 2, 3));
+            });
+            ]]>
+            </code>
+            </example>
+            <example>
+            <para>Run 'yarn publish --tag beta'</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Publish-With-Tag")
+                .Does(() =>
+            {
+                Yarn.Publish(settings => settings.Tag("beta"));
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.GetToolName">
+            <summary>
+            Gets the name of the tool
+            </summary>
+            <returns>the name of the tool</returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.GetToolExecutableNames">
+            <summary>
+            Gets the name of the tool executable
+            </summary>
+            <returns>The tool executable name</returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunner.GetWorkingDirectory(Cake.Yarn.YarnRunnerSettings)">
+            <summary>
+            Gets the working directory from the YarnRunnerSettings
+                        Defaults to the currently set working directory.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>
+            The working directory for the tool.
+            </returns>
+        </member>
+        <member name="T:Cake.Yarn.YarnRunnerAliases">
+            <summary>
+            Provides a wrapper around Yarn functionality within a Cake build script
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunnerAliases.Yarn(Cake.Core.ICakeContext)">
+            <summary>
+            Get an Yarn runner
+            </summary>
+            <param name="context">The context</param>
+            <returns></returns>
+            <example>
+            <para>Run 'yarn install'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-FromPath")
+                .Does(() =>
+            {
+                Yarn.FromPath("./dir-with-packagejson").Install();
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn install'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Install")
+                .Does(() =>
+            {
+                Yarn.Install();
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn pack'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Pack")
+                .Does(() =>
+            {
+                Yarn.Pack();
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn add gulp'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Add-Gulp")
+                .Does(() =>
+            {
+                Yarn.Add(settings => settings.Package("gulp"));
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn global add gulp'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Add-Gulp")
+                .Does(() =>
+            {
+                Yarn.Add(settings => settings.Package("gulp").Globally());
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn run hello'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Run")
+                .Does(() =>
+            {
+                Yarn.RunScript("hello");
+            });
+            ]]>
+            </code>
+            <para>Run 'yarn version'</para>
+            <para>Cake task:</para>
+            <code>
+            <![CDATA[
+            Task("Yarn-Version")
+                .Does(() =>
+            {
+                Yarn.Version();
+            });
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="T:Cake.Yarn.YarnRunnerSettings">
+            <summary>
+            Yarn runner settings
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnRunnerSettings.Command">
+            <summary>
+            The command being ran
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunnerSettings.#ctor(System.String)">
+            <summary>
+            Creates Yarn Runner settings
+            </summary>
+            <param name="command">command to run</param>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunnerSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:Cake.Yarn.YarnRunSettings">
+            <summary>
+            yarn run options
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnRunSettings.Arguments">
+            <summary>
+            Arguments to pass to the target script
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunSettings.#ctor">
+            <summary>
+            yarn 'run' settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunSettings.#ctor(System.String)">
+            <summary>
+            yarn 'run' settings for the named script
+            </summary>
+            <param name="command">script name to execute</param>
+        </member>
+        <member name="P:Cake.Yarn.YarnRunSettings.ScriptName">
+            <summary>
+            Name of the script to execute as defined in package.json
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnRunSettings.Silent">
+            <summary>
+            Skip Yarn console logs, other types of logs (script output) will be printed
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunSettings.WithArgument(System.String)">
+            <summary>
+            Add an argument
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnRunSettings.WithSilent">
+            <summary>
+            Sets Silent property to true
+            </summary>
+        </member>
+        <member name="T:Cake.Yarn.YarnVersionSettings">
+            <summary>
+            Yarn version options
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnVersionSettings.#ctor">
+            <summary>
+            Yarn "version" settings
+            </summary>
+        </member>
+        <member name="M:Cake.Yarn.YarnVersionSettings.EvaluateCore(Cake.Core.IO.ProcessArgumentBuilder)">
+            <summary>
+            Evaluate options
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Cake.Yarn.YarnVersionSettings.SetVersion(System.String)">
+            <summary>
+            Applies the --new-version parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cake.Yarn.YarnVersionSettings.DisableGitTagCreation">
+            <summary>
+            Applies the --no-git-tag-version parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cake.Yarn.YarnVersionSettings.NewVersion">
+            <summary>
+            --new-version
+            </summary>
+        </member>
+        <member name="P:Cake.Yarn.YarnVersionSettings.DisableGitTagVersion">
+            <summary>
+            --no-git-tag-version
+            </summary>
+        </member>
+    </members>
+</doc>
