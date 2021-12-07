@@ -46,7 +46,7 @@ var projectArtifactsPath = "./artifacts/App/";
 // var externalApiPublishedWebsitePath = $"{externalApiArtifactsPath}_PublishedWebsites/Volvo.DigitalCommerce.DealerPricing.ExternalApi/";
 
 //Package output
-var packageOutput = "./artifacts/Packages/";
+var packageOutput = "./artifacts/Packages/package.zip";
 
 //Testing result paths
 // var artifactsReportPath = System.IO.Path.GetFullPath("./artifacts/Report/");
@@ -236,7 +236,11 @@ Task ("CreatePackage")
         .WithTarget ("publish");
       }
     );
-
+    
+    Zip(
+            projectArtifactsPath,
+            packageOutput
+        );
     // MSBuild (azureFunctionProject,
     //   settings => {
     //     settings.SetConfiguration (configuration)
@@ -261,14 +265,14 @@ Task ("CreatePackage")
     // CopyDirectory (rgBuildPath, rgArtifactsPath);
   });
 
-Task("Build-Zip")
-    IsDependentOn("CreatePackage")
-    .Does(() =>
-    { 
-        Zip(
-            projectArtifactsPath
-        );
-    });
+// Task("Build-Zip")
+//     .IsDependentOn("CreatePackage")
+//     .Does(() =>
+//     { 
+//         Zip(
+//             projectArtifactsPath
+//         );
+//     });
 
 //   Task ("OctoPack")
 //   .IsDependentOn ("CreatePackage")
