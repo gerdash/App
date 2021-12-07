@@ -233,28 +233,28 @@ Task ("CreatePackage")
     EnsureDirectoryExists(packageOutput);
     var packagePath = MakeAbsolute(Directory(packageOutput)).CombineWithFilePath(package);
   
-   MSBuild (project,
+//    MSBuild (project,
+//       settings => {
+//         settings.SetConfiguration (configuration)
+//         .SetVerbosity (Verbosity.Minimal)
+//         .WithTarget ("Package")
+//         .WithProperty("PackageLocation", packagePath.FullPath);
+//     });
+
+    MSBuild (project,
       settings => {
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
-        .WithTarget ("Package")
-        .WithProperty("PackageLocation", packagePath.FullPath);
-    });
-    // MSBuild (project,
-    //   settings => {
-    //     settings.SetConfiguration (configuration)
-    //     .SetVerbosity (Verbosity.Minimal)
-    //     .WithProperty ("targetProfile", "CI")
-    //     .WithProperty ("PublishDir", "." + projectArtifactsPath)
-    //     .WithTarget ("publish");
-    //   }
-    // );
+        .WithProperty ("targetProfile", "CI")
+        .WithProperty ("PublishDir", "." + projectArtifactsPath)
+        .WithTarget ("publish");
+      }
+    );
     
-
-    // Zip(
-    //         project,
-    //         packageOutput
-    //     );
+    Zip(
+            project,
+            packagePath
+        );
     // MSBuild (azureFunctionProject,
     //   settings => {
     //     settings.SetConfiguration (configuration)
