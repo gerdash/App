@@ -46,7 +46,7 @@ var projectArtifactsPath = "./artifacts/App/";
 // var externalApiPublishedWebsitePath = $"{externalApiArtifactsPath}_PublishedWebsites/Volvo.DigitalCommerce.DealerPricing.ExternalApi/";
 
 //Package output
-var packageOutput = "./artifacts/package.zip";
+var packageOutput = "./artifacts/packages";
 
 //Testing result paths
 // var artifactsReportPath = System.IO.Path.GetFullPath("./artifacts/Report/");
@@ -62,6 +62,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
 var project = "./SandboxApp/SandboxApp.csproj";
+
 
 Setup(context => {
     assemblyVersion = BUILDVERSION;
@@ -227,20 +228,32 @@ Task ("CreatePackage")
   //.IsDependentOn ("Sonar-Analyse")
   .IsDependentOn ("Build")
   .Does (() => {
-    MSBuild (project,
+
+    EnsureDirectoryExists(packageOutput)
+
+   MSBuild (project,
       settings => {
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
-        .WithProperty ("targetProfile", "CI")
-        .WithProperty ("PublishDir", "." + projectArtifactsPath)
-        .WithTarget ("publish");
+        .WithTarget ("Package")
+        .WithProperty("PackageLocation", "./artifacts/packages/package.zip");
       }
     );
+    // MSBuild (project,
+    //   settings => {
+    //     settings.SetConfiguration (configuration)
+    //     .SetVerbosity (Verbosity.Minimal)
+    //     .WithProperty ("targetProfile", "CI")
+    //     .WithProperty ("PublishDir", "." + projectArtifactsPath)
+    //     .WithTarget ("publish");
+    //   }
+    // );
     
-    Zip(
-            project,
-            packageOutput
-        );
+
+    // Zip(
+    //         project,
+    //         packageOutput
+    //     );
     // MSBuild (azureFunctionProject,
     //   settings => {
     //     settings.SetConfiguration (configuration)
