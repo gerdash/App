@@ -231,10 +231,10 @@ Task ("CreatePackage")
   .Does (() => 
   {
     EnsureDirectoryExists(packageOutput);
-    packagePath = MakeAbsolute(packageOutput).CombineWithFilePath(package);
+    var packagePath = MakeAbsolute(packageOutput).CombineWithFilePath(package);
   
    MSBuild (project,
-      settings => 
+      settings => {
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithTarget ("Package")
