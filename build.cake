@@ -126,7 +126,7 @@ Task("Nuget")
 //     NpmRunScript(settings);
 //   });
 
-Task ("BuildWebpack")
+//Task ("BuildWebpack")
 //  .IsDependentOn("RunFrontendTests")
 //   .IsDependentOn ("NpmInstall")
 //   .IsDependentOn ("Clean")
