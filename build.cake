@@ -229,7 +229,7 @@ Task ("CreatePackage")
   .IsDependentOn ("Build")
   .Does (() => {
 
-    EnsureDirectoryExists(packageOutput)
+    EnsureDirectoryExists(packageOutput);
 
    MSBuild (project,
       settings => {
