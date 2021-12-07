@@ -228,19 +228,18 @@ Task ("Build")
 Task ("CreatePackage")
   //.IsDependentOn ("Sonar-Analyse")
   .IsDependentOn ("Build")
-  .Does (() => {
-
+  .Does (() => 
+  {
     EnsureDirectoryExists(packageOutput);
-    packagePath = MakeAbsolute(packageOutput).CombineWithFilePath(package)
+    packagePath = MakeAbsolute(packageOutput).CombineWithFilePath(package);
   
    MSBuild (project,
-      settings => {
+      settings => 
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithTarget ("Package")
         .WithProperty("PackageLocation", packagePath.FullPath);
-      }
-    );
+    });
     // MSBuild (project,
     //   settings => {
     //     settings.SetConfiguration (configuration)
