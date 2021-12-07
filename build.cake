@@ -246,7 +246,7 @@ Task ("CreatePackage")
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithProperty ("targetProfile", "CI")
-        .WithProperty ("PublishDir", "$(build.StaginDirectory)")
+        .WithProperty ("PublishDir", "$(build.stagingDirectory)")
         .WithTarget ("publish");
       }
     );
