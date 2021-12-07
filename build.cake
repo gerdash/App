@@ -39,7 +39,7 @@ var BUILDVCSNUMBER = Argument<string> ("BUILDVCSNUMBER", "");
 
 //PATHS
 
-var projectArtifactsPath = "./artifacts/App/";
+var projectArtifactsPath = "./artifacts/SandboxApp";
 // var rgArtifactsPath = $"./artifacts/ResourceGroup/";
 // var azureFunctionArtifactsPath = $"./artifacts/AzureFunctions/";
 // var externalApiArtifactsPath = $"./artifacts/ExternalApi/";
