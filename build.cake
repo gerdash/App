@@ -62,7 +62,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
 var project = "./SandboxApp/SandboxApp.csproj";
-var package = File("app.zip").Path;
+var package = File("app.zip" + releaseVersion).Path;
 
 
 Setup(context => {
@@ -233,28 +233,29 @@ Task ("CreatePackage")
     EnsureDirectoryExists(packageOutput);
     var packagePath = MakeAbsolute(Directory(packageOutput)).CombineWithFilePath(package);
   
-//    MSBuild (project,
-//       settings => {
-//         settings.SetConfiguration (configuration)
-//         .SetVerbosity (Verbosity.Minimal)
-//         .WithTarget ("Package")
-//         .WithProperty("PackageLocation", packagePath.FullPath)
-//     });
-
-    MSBuild (project,
+   MSBuild (project,
       settings => {
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
-        .WithProperty ("targetProfile", "CI")
-        .WithProperty ("OutDir", "./artifacts/SandboxApp/")
-        .WithTarget ("publish");
-      }
-    );
+        .WithTarget ("Package")
+        .WithProperty("PackageLocation", packagePath.FullPath)
+    });
+
+//need to include release version!!!
+    // MSBuild (project,
+    //   settings => {
+    //     settings.SetConfiguration (configuration)
+    //     .SetVerbosity (Verbosity.Minimal)
+    //     .WithProperty ("targetProfile", "CI")
+    //     .WithProperty ("OutDir", "./artifacts/SandboxApp/")
+    //     .WithTarget ("publish");
+    //   }
+    // );
     
-    Zip(
-            "./artifacts/SandboxApp/",
-            packagePath
-        );
+    // Zip(
+    //         "./artifacts/SandboxApp/",
+    //         packagePath
+    //     );
     // MSBuild (azureFunctionProject,
     //   settings => {
     //     settings.SetConfiguration (configuration)
