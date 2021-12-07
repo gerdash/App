@@ -246,13 +246,13 @@ Task ("CreatePackage")
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithProperty ("targetProfile", "CI")
-        .WithProperty ("PublishDir", "." + projectArtifactsPath)
+        .WithProperty ("PublishDir", "$(build.StaginDirectory)")
         .WithTarget ("publish");
       }
     );
     
     Zip(
-            "PublishDir",
+            "$(build.stagingDirectory)",
             packagePath
         );
     // MSBuild (azureFunctionProject,
