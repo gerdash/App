@@ -46,7 +46,7 @@ var projectArtifactsPath = "./artifacts/App/";
 // var externalApiPublishedWebsitePath = $"{externalApiArtifactsPath}_PublishedWebsites/Volvo.DigitalCommerce.DealerPricing.ExternalApi/";
 
 //Package output
-var packageOutput = "./artifacts/Packages/package.zip";
+var packageOutput = "./artifacts/package.zip";
 
 //Testing result paths
 // var artifactsReportPath = System.IO.Path.GetFullPath("./artifacts/Report/");
