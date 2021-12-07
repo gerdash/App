@@ -18,7 +18,7 @@ steps:
 - task: NuGetToolInstaller@1
   inputs:
     checkLatest: true
-    
+
 #specific package for our project, should I fake it?
 # - task: NuGetCommand@2
 #   inputs:
@@ -49,6 +49,6 @@ steps:
 #     arguments: 'sources remove -Name VCCAPI'
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Build.SourcesDirectory)/artifacts/Packages'
+    targetPath: '$(Build.ArtifactsStagingDirectory)'
     artifact: 'TestApp'
     publishLocation: 'pipeline'
