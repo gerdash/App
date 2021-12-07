@@ -8,38 +8,60 @@
 #addin nuget:?package=Cake.Npm&version=0.17.0
 #addin "Cake.Yarn"
 #addin nuget:?package=Cake.Sonar
+
 using Cake.Common.Build;
 
 var target = Argument ("target", "Default");
+var configuration = Argument ("configuration", "Release");
+
 //Setup variables
 var assemblyVersion = Argument<string> ("assemblyVersion", "0.0.0.1");
 var releaseVersion = Argument<string> ("releaseVersion", "0.0.0.1");
+
 var BUILDVERSION = Argument<string> ("BUILDVERSION", "");
 var BUILDVCSNUMBER = Argument<string> ("BUILDVCSNUMBER", "");
 
-//NPM variable
-//var uiPath = "./Volvo.DigitalCommerce.DealerPricing.Ui";
+//Octopus related variables
+
+// var server = Argument<string> ("server", "");
+// var apikey = Argument<string> ("apikey", "");
+// var channel = Argument<string> ("channel", "");
 
 //sonar variables
 // var sonarLoginKey = Argument<string> ("sonarLoginKey", "");
 // var sonarKey = Argument<string> ("sonarKey", "");
 // var sonarUrl = Argument<string> ("sonarUrl", "");
 
-var packageOutput = "./artifacts/Packages";
+//VCCAPI related variables
+// var VCCAPINugetServiceAccountLogin = Argument<string> ("VCCAPINugetServiceAccountLogin", "");
+// var VCCAPINugetServiceAccountPassword = Argument<string> ("VCCAPINugetServiceAccountPassword", "");
+// var VCCAPINugetUrl = Argument<string> ("VCCAPINugetUrl", "");
+
+//PATHS
+
+// var cloudServiceArtifactsPath = "./artifacts/App/";
+// var rgArtifactsPath = $"./artifacts/ResourceGroup/";
+// var azureFunctionArtifactsPath = $"./artifacts/AzureFunctions/";
+// var externalApiArtifactsPath = $"./artifacts/ExternalApi/";
+// var externalApiPublishedWebsitePath = $"{externalApiArtifactsPath}_PublishedWebsites/Volvo.DigitalCommerce.DealerPricing.ExternalApi/";
+
+//Package output
+var packageOutput = "./artifacts/Packages/";
+
+//Testing result paths
+// var artifactsReportPath = System.IO.Path.GetFullPath("./artifacts/Report/");
+// var dotCoverReportFile = artifactsReportPath + "report.dcvr";
+// var dotCoverResultFile = artifactsReportPath + "result.html";
+
 var appSolution = "./SandboxApp.sln";
 
-var appArtifactsPath = "./artifacts/App/";
-var rgArtifactsPath = $"./artifacts/ResourceGroup/";
-var azureFunctionArtifactsPath = $"./artifacts/AzureFunctions/";
-var externalApiArtifactsPath = $"./artifacts/ExternalApi/";
-var externalApiPublishedWebsitePath = $"{externalApiArtifactsPath}_PublishedWebsites/Volvo.DigitalCommerce.DealerPricing.ExternalApi/";
-
+//Individual projects
 // var cloudServiceProject = "./Volvo.DigitalCommerce.DealerPricing.App.CloudService/Volvo.DigitalCommerce.DealerPricing.App.CloudService.ccproj";
 // var azureFunctionProject = "./Volvo.DigitalCommerce.DealerPricing.AzureFunctions/Volvo.DigitalCommerce.DealerPricing.AzureFunctions.csproj";
 // var externalApiProject = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/Volvo.DigitalCommerce.DealerPricing.ExternalApi.csproj";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
-// var uiPath = "./Volvo.DigitalCommerce.DealerPricing.Ui";
+var uiPath = "./SandboxApp";
 
 Setup(context => {
     assemblyVersion = BUILDVERSION;
@@ -66,29 +88,29 @@ Task("Nuget")
     });
 
 //Commented out tasks deal with UI/FrontEnd
-// Task ("NpmInstall")
-//     .IsDependentOn ("Clean")
-//     .Does (() => {
-//         var settings = new NpmInstallSettings();
+Task ("NpmInstall")
+    .IsDependentOn ("Clean")
+    .Does (() => {
+        var settings = new NpmInstallSettings();
 
-//         settings.LogLevel = NpmLogLevel.Silent;
-//         settings.WorkingDirectory = uiPath;
+        settings.LogLevel = NpmLogLevel.Silent;
+        settings.WorkingDirectory = uiPath;
 
-//         NpmInstall (settings);
-//     });
+        NpmInstall (settings);
+    });
 
-// Task ("RunLint")
-//   .IsDependentOn ("NpmInstall")
-//   .IsDependentOn ("Clean")
-//   .Does (() => {
-//     var settings = new NpmRunScriptSettings();
+Task ("RunLint")
+  .IsDependentOn ("NpmInstall")
+  .IsDependentOn ("Clean")
+  .Does (() => {
+    var settings = new NpmRunScriptSettings();
 
-//     settings.LogLevel = NpmLogLevel.Silent;
-//     settings.WorkingDirectory = uiPath;
-//     settings.ScriptName = "lint";
+    settings.LogLevel = NpmLogLevel.Silent;
+    settings.WorkingDirectory = uiPath;
+    settings.ScriptName = "lint";
     
-//     NpmRunScript(settings);
-//   });
+    NpmRunScript(settings);
+  });
 
 // Task ("RunFrontendTests")
 //   .IsDependentOn ("RunLint")
@@ -104,20 +126,20 @@ Task("Nuget")
 //     NpmRunScript(settings);
 //   });
 
-// Task ("BuildWebpack")
-//   .IsDependentOn("RunFrontendTests")
-//   .IsDependentOn ("NpmInstall")
-//   .IsDependentOn ("Clean")
-//   .Does (() => {
-//     var settings = new NpmRunScriptSettings();
+Task ("BuildWebpack")
+//  .IsDependentOn("RunFrontendTests")
+  .IsDependentOn ("NpmInstall")
+  .IsDependentOn ("Clean")
+  .Does (() => {
+    var settings = new NpmRunScriptSettings();
 
-//     settings.LogLevel = NpmLogLevel.Silent;
-//     settings.WorkingDirectory = uiPath;
-//     settings.ScriptName = "build";
-//     settings.WithArguments("../../Volvo.DigitalCommerce.DealerPricing.App");
+    settings.LogLevel = NpmLogLevel.Silent;
+    settings.WorkingDirectory = uiPath;
+    settings.ScriptName = "build";
+    settings.WithArguments("../../Sandbox.sln");
     
-//     NpmRunScript(settings);
-//   });
+    NpmRunScript(settings);
+  });
 
 Task ("AssemblyVersion")
   .IsDependentOn ("Clean")

@@ -47,6 +47,8 @@ steps:
 #   inputs:
 #     command: 'custom'
 #     arguments: 'sources remove -Name VCCAPI'
+
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
