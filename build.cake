@@ -238,7 +238,7 @@ Task ("CreatePackage")
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithTarget ("Package")
-        .WithProperty("PackageLocation", packagePath.FullPath);
+        .WithProperty("PackageLocation", package);
     });
 
 //need to include release version!!!
