@@ -49,6 +49,6 @@ steps:
 #     arguments: 'sources remove -Name VCCAPI'
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Build.ArtifactsStagingDirectory)'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
     artifact: 'TestApp'
     publishLocation: 'pipeline'
