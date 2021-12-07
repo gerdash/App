@@ -263,11 +263,12 @@ Task ("CreatePackage")
 
 Task("Build-Zip")
     IsDependentOn("CreatePackage")
-    .Does(( => 
-    Zip(
-        PublishDir
-    );
-    ))
+    .Does(() =>
+    { 
+        Zip(
+            projectArtifactsPath
+        );
+    });
 
 //   Task ("OctoPack")
 //   .IsDependentOn ("CreatePackage")
