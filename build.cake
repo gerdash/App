@@ -62,6 +62,7 @@ var appSolution = "./SandboxApp.sln";
 // var externalApiBuildPath = "./Volvo.DigitalCommerce.DealerPricing.ExternalApi/bin/";
 // var rgBuildPath = $"./Volvo.DigitalCommerce.DealerPricing.ResourceGroup/";
 var project = "./SandboxApp/SandboxApp.csproj";
+var package = File("app.zip").Path;
 
 
 Setup(context => {
@@ -230,13 +231,14 @@ Task ("CreatePackage")
   .Does (() => {
 
     EnsureDirectoryExists(packageOutput);
-
+    packagePath = MakeAbsolute(packageOutput).CombineWithFilePath(package)
+  
    MSBuild (project,
       settings => {
         settings.SetConfiguration (configuration)
         .SetVerbosity (Verbosity.Minimal)
         .WithTarget ("Package")
-        .WithProperty("PackageLocation", "./artifacts/packages/package.zip");
+        .WithProperty("PackageLocation", packagePath.FullPath);
       }
     );
     // MSBuild (project,
