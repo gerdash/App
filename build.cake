@@ -236,9 +236,10 @@ Task ("CreatePackage")
    MSBuild (project,
       settings => {
         settings.SetConfiguration (configuration)
-        .SetVerbosity (Verbosity.Minimal)
+        .SetVerbosity (Verbosity.Diagnostic)
         .WithTarget ("Package")
-        .WithProperty("PackageLocation", package);
+        .WithProperty("PackageLocation", package.FullPath)
+        .WithProperty("PackageVersion", releaseVersion);
     });
 
 //need to include release version!!!
